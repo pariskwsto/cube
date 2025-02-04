@@ -29,7 +29,7 @@ jobs:
         with:
           files: cube-linux-amd64
           tag_name: ${{ github.ref_name }}
-          name: "Cube ${{ github.ref_name }}"
+          name: "cube ${{ github.ref_name }}"
           draft: false
           prerelease: false
         env:
