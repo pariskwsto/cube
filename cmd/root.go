@@ -22,9 +22,6 @@ func Execute() {
 	}
 }
 
-// init initializes the cobra root command
 func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-

@@ -23,7 +23,6 @@ var updateLinuxCmd = &cobra.Command{
 	},
 }
 
-// init initializes the cobra updateLinuxCmd command
 func init() {
 	rootCmd.AddCommand(updateLinuxCmd)
 }

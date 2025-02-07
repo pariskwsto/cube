@@ -8,10 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// ubuntuSetupCmd represents the ubuntuSetup command
-var ubuntuSetupCmd = &cobra.Command{
-	Use:   "ubuntu-setup",
-	Short: "Continue VPS Server Setup with Ubuntu [2] (Ubuntu 24.04.1 LTS)",
+// ubuntuPostSetupCmd represents the ubuntuPostSetup command
+var ubuntuPostSetupCmd = &cobra.Command{
+	Use:   "ubuntu-post-setup",
+	Short: "Continue VPS Setup [2] (Ubuntu 24.04.1 LTS)",
 	Run: func(cmd *cobra.Command, args []string) {
 		err := linux.UpdateLinux()
 		if err != nil {
@@ -22,7 +22,6 @@ var ubuntuSetupCmd = &cobra.Command{
 	},
 }
 
-// init initializes the cobra ubuntuSetupCmd command
 func init() {
-	rootCmd.AddCommand(ubuntuSetupCmd)
+	rootCmd.AddCommand(ubuntuPostSetupCmd)
 }

@@ -8,10 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// ubuntuSetupAsRootCmd represents the ubuntuSetupAsRoot command
-var ubuntuSetupAsRootCmd = &cobra.Command{
-	Use:   "ubuntu-setup-as-root",
-	Short: "Initial VPS Server Setup with Ubuntu as root [1] (Ubuntu 24.04.1 LTS)",
+// ubuntuInitialSetupCmd represents the ubuntuInitialSetup command
+var ubuntuInitialSetupCmd = &cobra.Command{
+	Use:   "ubuntu-initial-setup",
+	Short: "Initial VPS Setup as root [1] (Ubuntu 24.04.1 LTS)",
 	Run: func(cmd *cobra.Command, args []string) {
 		err := linux.UpdateLinux()
 		if err != nil {
@@ -22,7 +22,6 @@ var ubuntuSetupAsRootCmd = &cobra.Command{
 	},
 }
 
-// init initializes the cobra ubuntuSetupAsRootCmd command
 func init() {
-	rootCmd.AddCommand(ubuntuSetupAsRootCmd)
+	rootCmd.AddCommand(ubuntuInitialSetupCmd)
 }
