@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/pariskwsto/cube/internal/styles"
 )
 
 // updateLinux executes the necessary commands to update the Linux system
 func UpdateLinux() error {
-	fmt.Println("Updating package lists...")
+	fmt.Println(styles.Command("Updating package lists..."))
 	if err := aptUpdateCmd(); err != nil {
 		return err
 	}
 
-	fmt.Println("Upgrading installed packages...")
+	fmt.Println(styles.Command("Upgrading installed packages..."))
 	if err := aptUpgradeCmd(); err != nil {
 		return err
 	}
 
-	fmt.Println("Removing unnecessary packages...")
+	fmt.Println(styles.Command("Removing unnecessary packages..."))
 	return aptAutoremoveCmd()
 }
 
