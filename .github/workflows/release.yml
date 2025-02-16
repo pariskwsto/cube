@@ -19,10 +19,17 @@ jobs:
         with:
           go-version: '1.21'
 
-      - name: Build
+      - name: Build Cube (Linux AMD64)
         run: |
           go mod tidy
-          env GOOS=linux GOARCH=amd64 go build -o cube-linux-amd64 main.go
+          TAG_NAME="${GITHUB_REF_NAME}"
+          BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo "Building with ldflags:"
+          echo "-X github.com/pariskwsto/cube/build.Version=${TAG_NAME}"
+          echo "-X github.com/pariskwsto/cube/build.User=${GITHUB_ACTOR}"
+          echo "-X github.com/pariskwsto/cube/build.Time=${BUILD_TIME}"
+          echo "-X github.com/pariskwsto/cube/build.GitCommit=${GITHUB_SHA}"
+          env GOOS=linux GOARCH=amd64 go build -ldflags "-X github.com/pariskwsto/cube/build.Version=${TAG_NAME} -X github.com/pariskwsto/cube/build.User=${GITHUB_ACTOR} -X github.com/pariskwsto/cube/build.Time=${BUILD_TIME} -X github.com/pariskwsto/cube/build.GitCommit=${GITHUB_SHA}" -o cube-linux-amd64 main.go
 
       - name: Create GitHub Release & Upload Asset
         uses: softprops/action-gh-release@v2
