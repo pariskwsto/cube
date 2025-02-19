@@ -15,11 +15,14 @@ var updateLinuxCmd = &cobra.Command{
 	Short: "Updates the Linux system packages",
 	Long: `Runs system updates using apt or other package managers, depending on the OS.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println(styles.Command("> Starting system update..."))
+
 		err := linux.UpdateLinux()
 		if err != nil {
 			fmt.Println(styles.Error(fmt.Sprintf("Error updating system: %v", err)))
 			os.Exit(1)
 		}
+
 		fmt.Println(styles.Success("System update completed successfully!"))
 	},
 }
