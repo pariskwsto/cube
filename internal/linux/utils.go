@@ -1,8 +1,12 @@
 package linux
 
 import (
+	"errors"
 	"fmt"
+	"regexp"
+	"strings"
 
+	"github.com/manifoldco/promptui"
 	"github.com/pariskwsto/cube/internal/styles"
 )
 
@@ -16,4 +20,41 @@ func CommandsSuggestions() {
 	fmt.Println(styles.Suggestion("Start the ssh-agent: " + styles.Command(`$ eval "$(ssh-agent -s)"`)))
 	fmt.Println(styles.Suggestion("Add your SSH private key: " + styles.Command("$ ssh-add ~/.ssh/id_rsa")))
 	fmt.Println(styles.Suggestion("Start ssh-agent and add SSH key: " + styles.Command(`$ eval "$(ssh-agent)" && ssh-add ~/.ssh/id_rsa`)))
+}
+
+// StdinUsernamePrompt prompts the user to provide a valid username
+func StdinUsernamePrompt(promptMsg string) (string, error) {
+	label := "Please provide a valid username"
+	if promptMsg != "" {
+		label = promptMsg
+	}
+
+	fmt.Println(styles.Suggestion(label))
+	
+	const usernamePattern = `^[a-zA-Z0-9_-]+$`
+	re := regexp.MustCompile(usernamePattern)
+
+	validate := func(input string) error {
+		trimmed := strings.TrimSpace(input)
+		if len(trimmed) == 0 {
+			return errors.New("username cannot be empty")
+		}
+		if !re.MatchString(trimmed) {
+			return fmt.Errorf("invalid username: must match pattern %s", usernamePattern)
+		}
+		return nil
+	}
+
+	prompt := promptui.Prompt{
+		Label:    "username",
+		Validate: validate,
+	}
+
+	result, err := prompt.Run()
+	if err != nil {
+		fmt.Printf("Prompt failed: %v\n", err)
+		return "", err
+	}
+
+	return strings.TrimSpace(result), nil
 }
