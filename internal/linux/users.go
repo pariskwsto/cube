@@ -5,14 +5,12 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/pariskwsto/cube/internal/styles"
+	"github.com/pariskwsto/cube/internal/utils"
 )
 
 // CreateNewUser creates a new linux system user
 func CreateNewSystemUser(username string) error {
-	fmt.Println(styles.SubCommand(fmt.Sprintf("Creating new system user: %s", username)))
-
-	fmt.Println(styles.Command("$ adduser " + username))
+	utils.PrintCommand("$ adduser " + username)
 	cmd := exec.Command("adduser", username)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -27,9 +25,7 @@ func CreateNewSystemUser(username string) error {
 
 // GrantAdminPrivileges grants sudo privileges to a given user
 func GrantAdminPrivileges(username string) error {
-	fmt.Println(styles.SubCommand(fmt.Sprintf("Granting administrative privileges to user: %s", username)))
-
-	fmt.Println(styles.Command("$ usermod -aG sudo " + username))
+	utils.PrintCommand("$ usermod -aG sudo " + username)
 	cmd := exec.Command("usermod", "-aG", "sudo", username)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout

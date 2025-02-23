@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/pariskwsto/cube/internal/linux"
-	"github.com/pariskwsto/cube/internal/styles"
+	"github.com/pariskwsto/cube/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -13,18 +13,20 @@ var createNewUserCmd = &cobra.Command{
 	Use:   "create-new-user",
 	Short: "Create a new system user and grant admin privileges",
 	Run: func(cmd *cobra.Command, args []string) {
+		utils.PrintCommand("> Starting new system user creation...")
+		
 		username, err := linux.StdinUsernamePrompt("Enter new username for system: ")
 		if err != nil || username == "" {
-			fmt.Println("Error reading username or no username provided")
+			utils.PrintError("Error reading username or no username provided")
 			return
 		}
 
 		if err := linux.CreateAndConfigureUser(username); err != nil {
-			fmt.Println(styles.Error(fmt.Sprintf("Error creating new system user: %v", err)))
+			utils.PrintError(fmt.Sprintf("Error creating new system user: %v", err))
 			return
 		}
 
-		fmt.Println(styles.Success(fmt.Sprintf("User %s created successfully with admin privileges", username)))
+		utils.PrintSuccess(fmt.Sprintf("User %s created successfully with admin privileges", username))
 	},
 }
 

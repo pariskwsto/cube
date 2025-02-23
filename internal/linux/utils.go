@@ -8,18 +8,19 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/pariskwsto/cube/internal/styles"
+	"github.com/pariskwsto/cube/internal/utils"
 )
 
 // CommandsSuggestions prints useful linux commands suggestions
 func CommandsSuggestions() {
-	fmt.Println(styles.SubCommand("System Related Commands:"))
-	fmt.Println(styles.Suggestion("Check OS version: " + styles.Command("$ cat /etc/*-release")))
-	fmt.Println(styles.Suggestion("Check users list: " + styles.Command("$ less /etc/passwd")))
-	fmt.Println(styles.SubCommand("SSH keys Related Commands:"))
-	fmt.Println(styles.Suggestion("List SSH keys: " + styles.Command("$ ls -al ~/.ssh")))
-	fmt.Println(styles.Suggestion("Start the ssh-agent: " + styles.Command(`$ eval "$(ssh-agent -s)"`)))
-	fmt.Println(styles.Suggestion("Add your SSH private key: " + styles.Command("$ ssh-add ~/.ssh/id_rsa")))
-	fmt.Println(styles.Suggestion("Start ssh-agent and add SSH key: " + styles.Command(`$ eval "$(ssh-agent)" && ssh-add ~/.ssh/id_rsa`)))
+	utils.PrintSubCommand("System Related Commands:")
+	utils.PrintSuggestion("Check OS version: " + styles.Command("$ cat /etc/*-release"))
+	utils.PrintSuggestion("Check users list: " + styles.Command("$ less /etc/passwd"))
+	utils.PrintSubCommand("SSH keys Related Commands:")
+	utils.PrintSuggestion("List SSH keys: " + styles.Command("$ ls -al ~/.ssh"))
+	utils.PrintSuggestion("Start the ssh-agent: " + styles.Command(`$ eval "$(ssh-agent -s)"`))
+	utils.PrintSuggestion("Add your SSH private key: " + styles.Command("$ ssh-add ~/.ssh/id_rsa"))
+	utils.PrintSuggestion("Start ssh-agent and add SSH key: " + styles.Command(`$ eval "$(ssh-agent)" && ssh-add ~/.ssh/id_rsa`))
 }
 
 // StdinUsernamePrompt prompts the user to provide a valid username
@@ -29,7 +30,7 @@ func StdinUsernamePrompt(promptMsg string) (string, error) {
 		label = promptMsg
 	}
 
-	fmt.Println(styles.Suggestion(label))
+	utils.PrintSuggestion(label)
 	
 	const usernamePattern = `^[a-zA-Z0-9_-]+$`
 	re := regexp.MustCompile(usernamePattern)

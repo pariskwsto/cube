@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pariskwsto/cube/internal/styles"
 	"github.com/pariskwsto/cube/internal/ubuntu"
+	"github.com/pariskwsto/cube/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -14,15 +14,15 @@ var ubuntuStandardSetupCmd = &cobra.Command{
 	Use:   "ubuntu-standard-setup",
 	Short: "Continue with standard VPS setup [2] (Ubuntu 24.04.1 LTS)",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(styles.Command("> Starting standard VPS setup..."))
+		utils.PrintCommand("> Starting standard VPS setup...")
 
 		err := ubuntu.StandardSetup()
 		if err != nil {
-			fmt.Println(styles.Error(fmt.Sprintf("Error with standard VPS setup: %v", err)))
+			utils.PrintError(fmt.Sprintf("Error with standard VPS setup: %v", err))
 			os.Exit(1)
 		}
 		
-		fmt.Println(styles.Success("Standard VPS setup completed successfully!"))
+		utils.PrintSuccess("Standard VPS setup completed successfully!")
 	},
 }
 
